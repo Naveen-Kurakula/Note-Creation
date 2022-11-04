@@ -8,22 +8,25 @@
     <link rel="stylesheet"type="text/css" href="./style.css">
 </head>
 <body>
+    <hearder>
+        <nav>
+            <a class="active" href="register.html">REGISTER</a>
+            <a class="active" href="login.html">LOGIN</a>
+            
+            
+          </nav>
+    </hearder>
     <div class="login-form">
-    <form>
+    <form id="note-page">
         <h1>Note</h1>
     <label for="note">Enter your Note:</label></br></br>
-    <input type='text' className='form-control'  name='note'
-            />
+    <input type='text' className='form-control'  id='note' placeholder="Enter text"/>
 
 </br></br>
     <button type="submit">Submit</button>
-    <nav>
-        <a class="active" href="Register.html">REGISTER</a>
-        <a class="active" href="login.html">LOGIN</a>
-        <a class="active" href="home.html">HOME</a>
-        
-      </nav>
+    
 </form>
 </div>
+<script src="main.js"></script>
 </body>
 </html>

@@ -25,6 +25,18 @@ body {
     
     
 }
+nav a{
+    float: right;
+    
+    }
+  
+    nav a:hover, .active {
+     text-decoration: none;
+    color: black;
+    padding: 35px 20px;
+    font-size: 25px;
+    font-weight: bold;
+    }
 
 .image-holder img{
     padding: 30px 30px;
