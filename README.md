@@ -1,12 +1,18 @@
 # NOTE CREATION
 
- we use this to create a note
+ we use this to create a note using html pages
+
 
 # Pages
-*login.html
-*note.html
-*register.html
 
+we use three pages for creating and storing note and use java script and node to store user and note
+
+<ol>
+  <li>login.html</li>
+  <li>register.html</li>
+  <li>note.html</li>
+  
+</ol>
 
 # ERD Diagram
 
