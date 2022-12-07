@@ -3,7 +3,7 @@ class User{
     {
         this.firstname=firstname;
         this.lastname=lastname;
-        this.username=username;
+        this.userName=username;
         this.password=password;
     }
     getusername(){
