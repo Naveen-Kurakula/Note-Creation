@@ -1,66 +1,92 @@
 
-import { fetchData, getCurrentUser, setCurrentUser} from "./main.js";
-// user class
-class User {
-  constructor(username, password, firstname, lastname) {
-    this.username = username;
-    this.password = password;
-    this.firstname = firstname;
-    this.lastname = lastname;
-  }
+import { fetchData, getCurrentUser, setCurrentUser, setCurrentNote } from "./fetch.js";
+let detailNote = document.getElementById("note-page");
+if(detailNote) detailNote.addEventListener('submit', fannote);
 
-  getUsername() {
-    return this.username;
-  }
-}
 
-// login functionality
-let loginForm = document.getElementById("login-page");
-if(loginForm) loginForm.addEventListener('submit', login);
+  function fannote(e){
+    e.preventDefault();
+    let notes=document.getElementById('note').value;
 
-function login(e) {
-  e.preventDefault();
+    let note = new Note(notes);
+    let user = getCurrentUser();
+    note.userID = user.userID;
 
-  let username = document.getElementById("username").value;
-  let password = document.getElementById("password").value;
-  let user = new User(username, password);
-
-  fetchData("/users/login", user, "POST")
-  .then((data) => {
-    setCurrentUser(data);
+    fetchData("/notes/create", note, "POST")
+    .then((data) => {
+    //setCurrentNote(data);
+    setCurrentNote(data);
     window.location.href = "note.html";
-  })
-  .catch((err) => {
-    console.log(`Error!!! ${err.message}`)
-  }) 
-}
- 
-// register functionality
-let regForm = document.getElementById("register-page");
-if(regForm) regForm.addEventListener('submit', register);
+    })
+    .catch((err) =>{
+    let p = document.querySelector('.error');
+    p.innerHTML = err.message;
+    })
 
-function register(e) {
-  e.preventDefault();
+    const Note1 = new Note(notes);
+    console.log(Note1);
+    window.location.href = "note.html";
+    document.getElementById("note-page").reset();
+}
+
+class Note {
+    constructor(note) {
+      this.note = note;
+      
+    }
   
-  let username = document.getElementById("username").value;
-  let password = document.getElementById("password").value;
-  let firstname = document.getElementById("firstname").value;
-  let lastname = document.getElementById("lastname").value;
-  let user = new User(username, password, firstname,lastname);
-  console.log(user);
-  fetchData("/users/register", user, "POST")
-  .then((data) => {
-    setCurrentUser(data);
-    window.location.href = "note.html";
-  })
-  .catch((err) =>{
-    console.log(err);
-  })
+    getNote() {
+      return this.note;
+    }
+  }
+
+  let user = getCurrentUser();
+  if(user && detailNote) getNotes();
+
+
+
+// 
+function getNotes(){
+  
+  let user = getCurrentUser();
+   fetchData("/notes/", user,"post")
+   .then((data)=>{
+       let ul=document.getElementById("totalNotes");
+
+       data.forEach((note)=>{
+           let li=document.createElement('li');
+           let text=document.createTextNode(note.note);
+           li.appendChild(text);
+           ul.appendChild(li);
+
+       })
+   })
+   .catch((err)=>console.log(`Error! ${err}`));
+
+   //window.location.href="note.html";
 }
 
+/*
+function setCurrentUser(user) {
+  localStorage.setItem('user', JSON.stringify(user));
+}
+// getting current user function
+// FIX this next class
+function getCurrentUser() {
+  return JSON.parse(localStorage.getItem('user'));
+}
 
+// logout function for current user
+function removeCurrentUser() {
+  localStorage.removeItem('user')
+}
 
+ function setCurrentNote(note) {
+  localStorage.setItem('note', JSON.stringify(note));
+}
 
-
-
-
+// getting current note function
+function getCurrentNote() {
+  return JSON.parse(localStorage.getItem('note'));
+}
+*/
