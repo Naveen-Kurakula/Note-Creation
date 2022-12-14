@@ -1,18 +1,19 @@
-const express = require('express'); 
+
+const express = require('express');
 const User = require('../models/user');
 const router = express.Router();
 
 router
-  .get('/', (req, res) => {
+  .get('/', async (req, res) => {
     try {
-      const users = User.getUsers(); 
+      const users = await User.getAllUsers();
       res.send(users);
-    } catch (err) {
+    } catch(err) {
       res.status(401).send({message: err.message});
     }
-  });
+  })
 
-  router.post('/login', async (req, res) => {
+  .post('/login', async (req, res) => {
     try {
       let user = await User.login(req.body);
       res.send({...user, password: undefined})
@@ -23,7 +24,6 @@ router
 
   .post('/register', async (req, res) => {
     try {
-      console.log(req.body)
       let user = await User.register(req.body);
       res.send({...user, password: undefined})
     } catch(err) {
@@ -48,11 +48,6 @@ router
       res.status(401).send({message: err.message})
     }
   })
-
-
-
-module.exports = router;
-
 
 
 
